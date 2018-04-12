@@ -1,0 +1,35 @@
+{%extends 'base.html.twig'%}
+
+{% block stylesheets %}
+    {#utilisation normal sans aasetic#}
+    {#<link rel="stylesheet" href="{{ asset('css/test.css') }}" />#}
+
+    {#utilisation de assetic #}
+    {# l'utilisation des filtrer permet la reecriture des chemins relatifs et la minification (config: assetic)#}
+    {# l'utilisation d'un ? permet de desaction sa compression en mode dev#}
+    {% stylesheets filter='cssrewrite, scssphp'
+          'css/*' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+{% block  body %}
+
+    Hello World!
+
+    tous se passe <span class="rouge" onclick="testName();">bien</span>;
+
+    <h1>Rectangle</h1>
+{% endblock  %}
+
+{% block javascripts %}
+    {# l'utilisation des filtrer permet la reecriture des chemins relatifs et la minification (config: assetic)#}
+    {% javascripts filter='jsqueeze' 'js/test.js'%}
+       <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {#utilisation normal sans aasetic#}
+    {#<script src="{{ asset('js/test.js') }}"></script>#}
+
+    {#Pour faire cet export en dur, il faut utiliser une simple commande d'Assetic :
+
+php bin/console assetic:dump --env=prod#}
+{% endblock %}
